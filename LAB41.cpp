@@ -6,24 +6,33 @@ using namespace std;
 
 int main()
 {	
-	int value;
-	fifo lst = fifo();
+	
+	int value = -1;
+	fifo* lst = new fifo();
 
-	do
+	cout << "Введите очередной элемент списка (0 - прекращение ввода) ";
+	cin >> value;
+	while (value != 0)
 	{
+		lst->add(value);
+
 		cout << "Введите очередной элемент списка (0 - прекращение ввода) ";
 		cin >> value;
+	}
 
-		lst.add(value);
-	} while (value != 0);
+	lst->prints();
+	lst->printf(0);
 
-	lst.prints();
-	lst.pop(3);
-	//lst.pop(4);
-	cout << endl;
-	lst.prints();
+	lst->pop(3);
+	lst->pop(4);
 
-	lst.~fifo();
+	lst->prints();
 
-	lst.prints();
+	cout << lst->find(2) << endl;
+	cout << lst->find(3) << endl;
+
+	cout << lst->count(2) << endl;
+	cout << lst->count(3) << endl;
+
+	delete lst;
 }
