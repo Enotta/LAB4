@@ -48,20 +48,37 @@ void fifo::add(int _value)
 /// <param name="_value"></param>
 void fifo::pop(int _value)
 {
-	element* currentHead = head;
-	while (currentHead != 0)
-	{
-		if (currentHead->next->value == _value)
-		{
-			element* temp = currentHead->next;
-			currentHead->next = currentHead->next->next;
-			
-			delete temp;
+	element* first = head;
+	element* second = first->next;
 
-			break;
+	if (first->value == _value)
+	{
+		head = second;
+		delete first;
+
+		return;
+	}
+
+	while (second != tail)
+	{
+		if (second->value == _value)
+		{
+			first->next = second->next;
+			delete second;
+
+			return;
 		}
 
-		currentHead = currentHead->next;
+		first = first->next;
+		second = first->next;
+	}
+
+	if (second->value == _value)
+	{
+		tail = first;
+		tail->next = nullptr;
+
+		delete second;
 	}
 }
 

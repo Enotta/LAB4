@@ -1,17 +1,17 @@
-#include "lifo.h"
+#include "autosort.h"
 #include "element.h"
 #include <iostream>
 
 using namespace std;
 
-// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â lifo-§ã§á§Ú§ã§Ü§Ñ
-lifo::lifo() : head(nullptr), tail(nullptr) {};
-lifo::~lifo()
+// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â autosort-§ã§á§Ú§ã§Ü§Ñ
+autosort::autosort() : head(nullptr), tail(nullptr) {};
+autosort::~autosort()
 {
-	element* current = head;
+	element_k* current = head;
 	while (current != tail)
 	{
-		element* temp = current;
+		element_k* temp = current;
 		current = current->next;
 
 		delete temp;
@@ -26,9 +26,9 @@ lifo::~lifo()
 /// §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ó §ã§á§Ú§ã§à§Ü
 /// </summary>
 /// <param name="_value"></param>
-void lifo::add(int _value)
+void autosort::add(int _key, int _value)
 {
-	element* newElem = new element(_value);
+	element_k* newElem = new element_k(_key, _value);
 
 	if (head == nullptr)
 	{
@@ -37,6 +37,19 @@ void lifo::add(int _value)
 	}
 	else
 	{
+		element_k* current = head;
+		while (current != tail)
+		{
+			if (current->value < _value && current->next->value > _value)
+			{
+				newElem->next = current->next;
+				current->next = newElem;
+
+				return;
+			}
+			current = current->next;
+		}
+
 		newElem->next = head;
 		head = newElem;
 	}
@@ -46,39 +59,22 @@ void lifo::add(int _value)
 /// §µ§Õ§Ñ§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ú§Ù §ã§á§Ú§ã§Ü§Ñ §á§à §Ù§ß§Ñ§é§Ö§ß§Ú§ð
 /// </summary>
 /// <param name="_value"></param>
-void lifo::pop(int _value)
+void autosort::pop(int _value)
 {
-	element* first = head;
-	element* second = first->next;
-
-	if (first->value == _value)
+	element_k* currentHead = head;
+	while (currentHead != nullptr)
 	{
-		head = second;
-		delete first;
-
-		return;
-	}
-
-	while (second != tail)
-	{
-		if (second->value == _value)
+		if (currentHead->next->value == _value)
 		{
-			first->next = second->next;
-			delete second;
+			element_k* temp = currentHead->next;
+			currentHead->next = currentHead->next->next;
 
-			return;
+			delete temp;
+
+			break;
 		}
 
-		first = first->next;
-		second = first->next;
-	}
-
-	if (second->value == _value)
-	{
-		tail = first;
-		tail->next = nullptr;
-
-		delete second;
+		currentHead = currentHead->next;
 	}
 }
 
@@ -87,9 +83,9 @@ void lifo::pop(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-element* lifo::find(int _value)
+element_k* autosort::find(int _value)
 {
-	element* current = head;
+	element_k* current = head;
 	while (current != tail)
 	{
 		if (current->value == _value)
@@ -108,11 +104,11 @@ element* lifo::find(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-int lifo::count(int _value)
+int autosort::count(int _value)
 {
 	int count = 0;
 
-	element* current = head;
+	element_k* current = head;
 	while (current != tail)
 	{
 		if (current->value == _value)
@@ -129,9 +125,9 @@ int lifo::count(int _value)
 /// <summary>
 /// §£§í§Ó§à§Õ §ã§á§Ú§ã§Ü§Ñ §ã §ß§Ñ§é§Ñ§Ý§Ñ §Ú §Õ§à §Ü§à§ß§è§Ñ
 /// </summary>
-void lifo::prints()
+void autosort::prints()
 {
-	element* currentHead = head;
+	element_k* currentHead = head;
 
 	while (currentHead != tail)
 	{
@@ -146,7 +142,7 @@ void lifo::prints()
 /// §£§í§Ó§à§Õ §ã §Ü§à§ß§è§Ñ §Ú §Õ§à §ß§Ñ§é§Ñ§Ý§Ñ (§â§Ö§Ü§å§â§ã§Ú§Ó§ß§à)
 /// </summary>
 /// <param name="current"></param>
-void lifo::printf(element* current = nullptr)
+void autosort::printf(element_k* current = nullptr)
 {
 	if (current == nullptr)
 	{
@@ -171,16 +167,19 @@ void lifo::printf(element* current = nullptr)
 /// <summary>
 /// §¥§Ö§Þ§à§ß§ã§ä§â§Ñ§è§Ú§ñ §â§Ñ§Ò§à§ä§í
 /// </summary>
-void lifo::display()
+void autosort::display()
 {
+	int key;
 	int value;
-	lifo* lst = new lifo();
+	autosort* lst = new autosort();
 
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
+	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+	cin >> key;
 	while (value != 0)
 	{
-		lst->add(value);
+		lst->add(key, value);
 
 		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 		cin >> value;

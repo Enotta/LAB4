@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="autosort.cpp" />
     <ClCompile Include="element.cpp" />
     <ClCompile Include="fifo.cpp" />
     <ClCompile Include="LAB4.cpp" />
     <ClCompile Include="lifo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="autosort.h" />
     <ClInclude Include="element.h" />
     <ClInclude Include="fifo.h" />
     <ClInclude Include="lifo.h" />
