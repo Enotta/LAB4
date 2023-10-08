@@ -1,18 +1,18 @@
-#include "fifo.h"
+#include "lifo.h"
 #include "element.h"
 #include <iostream>
 
 using namespace std;
 
-// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â fifo-§ã§á§Ú§ã§Ü§Ñ
-fifo::fifo(): head(nullptr), tail(nullptr) {};
-fifo::~fifo()
+// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â lifo-§ã§á§Ú§ã§Ü§Ñ
+lifo::lifo() : head(nullptr), tail(nullptr) {};
+lifo::~lifo()
 {
-	element* currentHead = head;
-	while (currentHead != tail)
+	element* current = head;
+	while (current != tail)
 	{
-		element* temp = currentHead;
-		currentHead = currentHead->next;
+		element* temp = current;
+		current = current->next;
 
 		delete temp;
 	}
@@ -26,27 +26,27 @@ fifo::~fifo()
 /// §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ó §ã§á§Ú§ã§à§Ü
 /// </summary>
 /// <param name="_value"></param>
-void fifo::add(int _value)
+void lifo::add(int _value)
 {
 	element* newElem = new element(_value);
 
 	if (head == nullptr)
 	{
 		head = newElem;
+		tail = newElem;
 	}
 	else
 	{
-		tail->next = newElem;
+		newElem->next = head;
+		head = newElem;
 	}
-
-	tail = newElem;
 }
 
 /// <summary>
 /// §µ§Õ§Ñ§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ú§Ù §ã§á§Ú§ã§Ü§Ñ §á§à §Ù§ß§Ñ§é§Ö§ß§Ú§ð
 /// </summary>
 /// <param name="_value"></param>
-void fifo::pop(int _value)
+void lifo::pop(int _value)
 {
 	element* currentHead = head;
 	while (currentHead != 0)
@@ -55,7 +55,7 @@ void fifo::pop(int _value)
 		{
 			element* temp = currentHead->next;
 			currentHead->next = currentHead->next->next;
-			
+
 			delete temp;
 
 			break;
@@ -70,7 +70,7 @@ void fifo::pop(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-element* fifo::find(int _value)
+element* lifo::find(int _value)
 {
 	element* current = head;
 	while (current != tail)
@@ -91,7 +91,7 @@ element* fifo::find(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-int fifo::count(int _value)
+int lifo::count(int _value)
 {
 	int count = 0;
 
@@ -112,7 +112,7 @@ int fifo::count(int _value)
 /// <summary>
 /// §£§í§Ó§à§Õ §ã§á§Ú§ã§Ü§Ñ §ã §ß§Ñ§é§Ñ§Ý§Ñ §Ú §Õ§à §Ü§à§ß§è§Ñ
 /// </summary>
-void fifo::prints()
+void lifo::prints()
 {
 	element* currentHead = head;
 
@@ -129,7 +129,7 @@ void fifo::prints()
 /// §£§í§Ó§à§Õ §ã §Ü§à§ß§è§Ñ §Ú §Õ§à §ß§Ñ§é§Ñ§Ý§Ñ (§â§Ö§Ü§å§â§ã§Ú§Ó§ß§à)
 /// </summary>
 /// <param name="current"></param>
-void fifo::printf(element* current = nullptr)
+void lifo::printf(element* current = nullptr)
 {
 	if (current == nullptr)
 	{
@@ -154,10 +154,10 @@ void fifo::printf(element* current = nullptr)
 /// <summary>
 /// §¥§Ö§Þ§à§ß§ã§ä§â§Ñ§è§Ú§ñ §â§Ñ§Ò§à§ä§í
 /// </summary>
-void fifo::display()
+void lifo::display()
 {
 	int value;
-	fifo* lst = new fifo();
+	lifo* lst = new lifo();
 
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;

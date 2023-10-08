@@ -5,15 +5,15 @@ using namespace std;
 
 #pragma once
 
-class fifo
+class lifo
 {
 private:
 	element* head;
 	element* tail;
 
 public:
-	fifo();
-	~fifo();
+	lifo();
+	~lifo();
 
 	void add(int _value);
 	void pop(int _value);
