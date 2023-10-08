@@ -20,6 +20,7 @@ int main()
 		cin >> value;
 	}
 
+	// Демонстрация работы методов fifo- класса
 	lst->prints();
 	lst->printf(0);
 
