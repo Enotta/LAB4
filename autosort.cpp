@@ -118,7 +118,6 @@ element_k* autosort::find(int _value)
 /// §±§à§Õ§ã§é§×§ä §Ü§à§Ý§Ú§é§Ö§ã§ä§Ó§Ñ §ï§Ý§Ö§Þ§Ö§ß§ä§à§Ó §Ù§Ñ§Õ§Ñ§ß§ß§à§Ô§à §Ù§ß§Ñ§é§Ö§ß§Ú§ñ
 /// </summary>
 /// <param name="_value"></param>
-/// <returns></returns>
 int autosort::count(int _value)
 {
 	int count = 0;
