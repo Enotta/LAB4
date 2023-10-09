@@ -9,6 +9,6 @@ using namespace std;
 int main()
 {	
 	//fifo::display();
-	lifo::display();
-	//autosort::display();
+	//lifo::display();
+	autosort::display();
 }

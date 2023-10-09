@@ -34,25 +34,23 @@ void autosort::add(int _key, int _value)
 	{
 		head = newElem;
 		tail = newElem;
+		return;
 	}
-	else
+	else if (tail->value < newElem->value)
 	{
-		element_k* current = head;
-		while (current != tail)
-		{
-			if (current->value < _value && current->next->value > _value)
-			{
-				newElem->next = current->next;
-				current->next = newElem;
-
-				return;
-			}
-			current = current->next;
-		}
-
-		newElem->next = head;
-		head = newElem;
+		tail->next = newElem;
+		tail = newElem;
+		return;
 	}
+
+	element_k* current = head;
+	while (current->next != nullptr && current->next->value < _value)
+	{
+		current = current->next;
+	}
+
+	newElem->next = current->next;
+	current->next = newElem;
 }
 
 /// <summary>
@@ -61,20 +59,37 @@ void autosort::add(int _key, int _value)
 /// <param name="_value"></param>
 void autosort::pop(int _value)
 {
-	element_k* currentHead = head;
-	while (currentHead != nullptr)
+	element_k* first = head;
+	element_k* second = first->next;
+
+	if (first->value == _value)
 	{
-		if (currentHead->next->value == _value)
+		head = second;
+		delete first;
+
+		return;
+	}
+
+	while (second != tail)
+	{
+		if (second->value == _value)
 		{
-			element_k* temp = currentHead->next;
-			currentHead->next = currentHead->next->next;
+			first->next = second->next;
+			delete second;
 
-			delete temp;
-
-			break;
+			return;
 		}
 
-		currentHead = currentHead->next;
+		first = first->next;
+		second = first->next;
+	}
+
+	if (second->value == _value)
+	{
+		tail = first;
+		tail->next = nullptr;
+
+		delete second;
 	}
 }
 
@@ -173,15 +188,18 @@ void autosort::display()
 	int value;
 	autosort* lst = new autosort();
 
-	cout << "圾志快忱我找快 抉折快把快忱扶抉抄 改抖快技快扶找 扼扭我扼抗忘 (0 - 扭把快抗把忘投快扶我快 志志抉忱忘) ";
-	cin >> value;
-	cout << "圾志快忱我找快 抉折快把快忱扶抉抄 改抖快技快扶找 扼扭我扼抗忘 (0 - 扭把快抗把忘投快扶我快 志志抉忱忘) ";
+	cout << "圾志快忱我找快 抉折快把快忱扶抉抄 抗抖攻折 改抖快技快扶找忘 扼扭我扼抗忘 (0 - 扭把快抗把忘投快扶我快 志志抉忱忘) ";
 	cin >> key;
-	while (value != 0)
+	cout << "圾志快忱我找快 抉折快把快忱扶抉快 戒扶忘折快扶我快 改抖快技快扶找忘 扼扭我扼抗忘 (0 - 扭把快抗把忘投快扶我快 志志抉忱忘) ";
+	cin >> value;
+	
+	while (key != 0 && value != 0)
 	{
 		lst->add(key, value);
 
-		cout << "圾志快忱我找快 抉折快把快忱扶抉抄 改抖快技快扶找 扼扭我扼抗忘 (0 - 扭把快抗把忘投快扶我快 志志抉忱忘) ";
+		cout << "圾志快忱我找快 抉折快把快忱扶抉抄 抗抖攻折 改抖快技快扶找忘 扼扭我扼抗忘 (0 - 扭把快抗把忘投快扶我快 志志抉忱忘) ";
+		cin >> key;
+		cout << "圾志快忱我找快 抉折快把快忱扶抉快 戒扶忘折快扶我快 改抖快技快扶找忘 扼扭我扼抗忘 (0 - 扭把快抗把忘投快扶我快 志志抉忱忘) ";
 		cin >> value;
 	}
 
