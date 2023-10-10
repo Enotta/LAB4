@@ -135,7 +135,7 @@ void lifo::prints()
 
 	while (currentHead != tail)
 	{
-		cout << currentHead->value;
+		cout << currentHead->value << " ";
 		currentHead = currentHead->next;
 	}
 
@@ -160,7 +160,7 @@ void lifo::printf(element* current = nullptr)
 
 	if (current != head)
 	{
-		cout << current->value;
+		cout << current->value << " ";
 	}
 	else
 	{

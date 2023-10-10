@@ -166,7 +166,7 @@ void autosort::prints()
 
 	while (currentHead != tail)
 	{
-		cout << currentHead->value;
+		cout << currentHead->value << " ";
 		currentHead = currentHead->next;
 	}
 
@@ -191,7 +191,7 @@ void autosort::printf(element_k* current = nullptr)
 
 	if (current != head)
 	{
-		cout << current->value;
+		cout << current->value << " ";
 	}
 	else
 	{

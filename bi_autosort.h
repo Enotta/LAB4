@@ -8,8 +8,8 @@ using namespace std;
 class bi_autosort
 {
 private:
-	element_k* head;
-	element_k* tail;
+	element_k_bi* head;
+	element_k_bi* tail;
 
 public:
 	bi_autosort();
@@ -18,11 +18,11 @@ public:
 	void add(int _key, int _value);
 	void pop(int _value);
 
-	element_k* find(int _value);
+	element_k_bi* find(int _value);
 	int count(int _value);
 
 	void prints();
-	void printf(element_k* current);
+	void printf(element_k_bi* current);
 
 	static void display();
 };
