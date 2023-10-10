@@ -1,3 +1,7 @@
+#include <iostream>
+
+using namespace std;
+
 #pragma once
 
 /// <summary>
@@ -38,3 +42,20 @@ struct element_k_bi
 
 	element_k_bi(int key, int value);
 };
+
+/// <summary>
+/// §¿§Ý§Ö§Þ§Ö§ß§ä §ã §Ü§Ý§ð§é§Ñ§Þ§Ú (§Õ§Ó§å§ã§Ó§ñ§Ù§ß§í§Û)
+/// </summary>
+struct element_k2_bi
+{
+	int key1;
+	int key2;
+	
+	int value;
+
+	element_k2_bi* previous;
+	element_k2_bi* next;
+
+	element_k2_bi(int key1, int key2, int value);
+};
+
