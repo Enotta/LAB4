@@ -22,7 +22,7 @@ public:
 	int count(int _value);
 
 	void prints();
-	void printf(element_k_bi* current);
+	void printf();
 
 	static void display();
 };

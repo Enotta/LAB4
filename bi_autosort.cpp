@@ -39,6 +39,7 @@ void bi_autosort::add(int _key, int _value)
 	else if (tail->value < newElem->value)
 	{
 		tail->next = newElem;
+		newElem->previous = tail;
 		tail = newElem;
 		return;
 	}
@@ -52,15 +53,15 @@ void bi_autosort::add(int _key, int _value)
 	if (current->key >= newElem->key)
 	{
 		newElem->next = current;
-		if (current == head)
-		{
-			head = newElem;
-		}
+		current->previous = newElem;
+		head = newElem;
 	}
 	else
 	{
 		newElem->next = current->next;
+		current->next->previous = newElem;
 		current->next = newElem;
+		newElem->previous = current;
 	}
 }
 
@@ -70,37 +71,35 @@ void bi_autosort::add(int _key, int _value)
 /// <param name="_value"></param>
 void bi_autosort::pop(int _value)
 {
-	element_k_bi* first = head;
-	element_k_bi* second = first->next;
+	element_k_bi* temp;
+	element_k_bi* current = head;
 
-	if (first->value == _value)
+	if (current->value == _value)
 	{
-		head = second;
-		delete first;
+		temp = current;
+		head = current->next;
+
+		head->previous = nullptr;
+		delete temp;
 
 		return;
 	}
 
-	while (second != tail)
+	while (current != tail)
 	{
-		if (second->value == _value)
+		if (current->value == _value)
 		{
-			first->next = second->next;
-			delete second;
+			temp = current;
+
+			current->next->previous = current->previous;
+			current->previous->next = current->next;
+
+			delete temp;
 
 			return;
 		}
 
-		first = first->next;
-		second = first->next;
-	}
-
-	if (second->value == _value)
-	{
-		tail = first;
-		tail->next = nullptr;
-
-		delete second;
+		current = current->next;
 	}
 }
 
@@ -177,26 +176,16 @@ void bi_autosort::prints()
 /// §£§í§Ó§à§Õ §ã §Ü§à§ß§è§Ñ §Ú §Õ§à §ß§Ñ§é§Ñ§Ý§Ñ (§â§Ö§Ü§å§â§ã§Ú§Ó§ß§à)
 /// </summary>
 /// <param name="current"></param>
-void bi_autosort::printf(element_k_bi* current = nullptr)
+void bi_autosort::printf()
 {
-	if (current == nullptr)
-	{
-		current = head;
-	}
-
-	if (current != tail)
-	{
-		printf(current->next);
-	}
-
-	if (current != head)
+	element_k_bi* current = tail;
+	while (current->previous != nullptr)
 	{
 		cout << current->value << " ";
+		current = current->previous;
 	}
-	else
-	{
-		cout << current->value << endl;
-	}
+
+	cout << current->value << endl;
 }
 
 /// <summary>
@@ -228,7 +217,7 @@ void bi_autosort::display()
 	lst->prints();
 
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
-	lst->printf(0);
+	lst->printf();
 
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§ä§à§â§í§Û §ç§à§ä§Ú§ä§Ö §å§Õ§Ñ§Ý§Ú§ä§î ";
 	cin >> value;
@@ -238,7 +227,7 @@ void bi_autosort::display()
 	lst->prints();
 
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
-	lst->printf(0);
+	lst->printf();
 
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§ä§à§â§í§Û §ç§à§ä§Ú§ä§Ö §ß§Ñ§Û§ä§Ú ";
 	cin >> value;
