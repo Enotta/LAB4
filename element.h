@@ -6,18 +6,35 @@
 struct element
 {
 	int value;
+
 	element* next;
 
 	element(int value);
-	element(int value, element* next);
 };
 
+/// <summary>
+/// §¿§Ý§Ö§Þ§Ö§ß§ä §ã §Ü§Ý§ð§é§à§Þ
+/// </summary>
 struct element_k
 {
 	int key;
 	int value;
+
 	element_k* next;
 
 	element_k(int key, int value);
-	element_k(int key, int value, element_k* next);
+};
+
+/// <summary>
+/// §¿§Ý§Ö§Þ§Ö§ß§ä §ã §Ü§Ý§ð§é§à§Þ (§Õ§Ó§å§ã§Ó§ñ§Ù§ß§í§Û)
+/// </summary>
+struct element_k_bi
+{
+	int key;
+	int value;
+
+	element_k_bi* previous;
+	element_k_bi* next;
+
+	element_k_bi(int key, int value);
 };

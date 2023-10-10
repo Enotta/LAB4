@@ -1,12 +1,12 @@
-#include "autosort.h"
+#include "bi_autosort.h"
 #include "element.h"
 #include <iostream>
 
 using namespace std;
 
 // §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â autosort-§ã§á§Ú§ã§Ü§Ñ
-autosort::autosort() : head(nullptr), tail(nullptr) {};
-autosort::~autosort()
+bi_autosort::bi_autosort() : head(nullptr), tail(nullptr) {};
+bi_autosort::~bi_autosort()
 {
 	element_k* current = head;
 	while (current != tail)
@@ -26,7 +26,7 @@ autosort::~autosort()
 /// §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ó §ã§á§Ú§ã§à§Ü
 /// </summary>
 /// <param name="_value"></param>
-void autosort::add(int _key, int _value)
+void bi_autosort::add(int _key, int _value)
 {
 	element_k* newElem = new element_k(_key, _value);
 
@@ -36,7 +36,7 @@ void autosort::add(int _key, int _value)
 		tail = newElem;
 		return;
 	}
-	else if (tail->key < newElem->key)
+	else if (tail->value < newElem->value)
 	{
 		tail->next = newElem;
 		tail = newElem;
@@ -44,31 +44,20 @@ void autosort::add(int _key, int _value)
 	}
 
 	element_k* current = head;
-	while (current->next != nullptr && current->next->key < _key)
+	while (current->next != nullptr && current->next->value < _value)
 	{
 		current = current->next;
 	}
 
-	if (current->key >= newElem->key)
-	{
-		newElem->next = current;
-		if (current == head)
-		{
-			head = newElem;
-		}
-	}
-	else
-	{
-		newElem->next = current->next;
-		current->next = newElem;
-	}
+	newElem->next = current->next;
+	current->next = newElem;
 }
 
 /// <summary>
 /// §µ§Õ§Ñ§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ú§Ù §ã§á§Ú§ã§Ü§Ñ §á§à §Ù§ß§Ñ§é§Ö§ß§Ú§ð
 /// </summary>
 /// <param name="_value"></param>
-void autosort::pop(int _value)
+void bi_autosort::pop(int _value)
 {
 	element_k* first = head;
 	element_k* second = first->next;
@@ -109,7 +98,7 @@ void autosort::pop(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-element_k* autosort::find(int _value)
+element_k* bi_autosort::find(int _value)
 {
 	element_k* current = head;
 	while (current != tail)
@@ -122,11 +111,6 @@ element_k* autosort::find(int _value)
 		current = current->next;
 	}
 
-	if (tail->value == _value)
-	{
-		return tail;
-	}
-
 	return nullptr;
 }
 
@@ -134,7 +118,7 @@ element_k* autosort::find(int _value)
 /// §±§à§Õ§ã§é§×§ä §Ü§à§Ý§Ú§é§Ö§ã§ä§Ó§Ñ §ï§Ý§Ö§Þ§Ö§ß§ä§à§Ó §Ù§Ñ§Õ§Ñ§ß§ß§à§Ô§à §Ù§ß§Ñ§é§Ö§ß§Ú§ñ
 /// </summary>
 /// <param name="_value"></param>
-int autosort::count(int _value)
+int bi_autosort::count(int _value)
 {
 	int count = 0;
 
@@ -149,18 +133,13 @@ int autosort::count(int _value)
 		current = current->next;
 	}
 
-	if (tail->value == _value)
-	{
-		count++;
-	}
-
 	return count;
 }
 
 /// <summary>
 /// §£§í§Ó§à§Õ §ã§á§Ú§ã§Ü§Ñ §ã §ß§Ñ§é§Ñ§Ý§Ñ §Ú §Õ§à §Ü§à§ß§è§Ñ
 /// </summary>
-void autosort::prints()
+void bi_autosort::prints()
 {
 	element_k* currentHead = head;
 
@@ -177,7 +156,7 @@ void autosort::prints()
 /// §£§í§Ó§à§Õ §ã §Ü§à§ß§è§Ñ §Ú §Õ§à §ß§Ñ§é§Ñ§Ý§Ñ (§â§Ö§Ü§å§â§ã§Ú§Ó§ß§à)
 /// </summary>
 /// <param name="current"></param>
-void autosort::printf(element_k* current = nullptr)
+void bi_autosort::printf(element_k* current = nullptr)
 {
 	if (current == nullptr)
 	{
@@ -202,17 +181,17 @@ void autosort::printf(element_k* current = nullptr)
 /// <summary>
 /// §¥§Ö§Þ§à§ß§ã§ä§â§Ñ§è§Ú§ñ §â§Ñ§Ò§à§ä§í
 /// </summary>
-void autosort::display()
+void bi_autosort::display()
 {
 	int key;
 	int value;
-	autosort* lst = new autosort();
+	bi_autosort* lst = new bi_autosort();
 
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §Ü§Ý§ð§é §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> key;
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-	
+
 	while (key != 0 && value != 0)
 	{
 		lst->add(key, value);
