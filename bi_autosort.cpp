@@ -71,6 +71,12 @@ void bi_autosort::add(int _key, int _value)
 /// <param name="_value"></param>
 void bi_autosort::pop(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k_bi* temp;
 	element_k_bi* current = head;
 
@@ -110,6 +116,12 @@ void bi_autosort::pop(int _value)
 /// <returns></returns>
 element_k_bi* bi_autosort::find(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return nullptr;
+	}
+
 	element_k_bi* current = head;
 	while (current != tail)
 	{
@@ -135,6 +147,12 @@ element_k_bi* bi_autosort::find(int _value)
 /// <param name="_value"></param>
 int bi_autosort::count(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return 0;
+	}
+
 	int count = 0;
 
 	element_k_bi* current = head;
@@ -161,6 +179,12 @@ int bi_autosort::count(int _value)
 /// </summary>
 void bi_autosort::prints()
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k_bi* currentHead = head;
 
 	while (currentHead != tail)
@@ -178,6 +202,12 @@ void bi_autosort::prints()
 /// <param name="current"></param>
 void bi_autosort::printf()
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k_bi* current = tail;
 	while (current->previous != nullptr)
 	{

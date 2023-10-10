@@ -48,6 +48,12 @@ void fifo::add(int _value)
 /// <param name="_value"></param>
 void fifo::pop(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element* first = head;
 	element* second = first->next;
 
@@ -89,6 +95,12 @@ void fifo::pop(int _value)
 /// <returns></returns>
 element* fifo::find(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return nullptr;
+	}
+
 	element* current = head;
 	while (current != tail)
 	{
@@ -110,6 +122,12 @@ element* fifo::find(int _value)
 /// <returns></returns>
 int fifo::count(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return 0;
+	}
+
 	int count = 0;
 
 	element* current = head;
@@ -131,6 +149,12 @@ int fifo::count(int _value)
 /// </summary>
 void fifo::prints()
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element* currentHead = head;
 
 	while (currentHead != tail)
@@ -148,6 +172,12 @@ void fifo::prints()
 /// <param name="current"></param>
 void fifo::printf(element* current = nullptr)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	if (current == nullptr)
 	{
 		current = head;

@@ -70,6 +70,12 @@ void autosort::add(int _key, int _value)
 /// <param name="_value"></param>
 void autosort::pop(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k* first = head;
 	element_k* second = first->next;
 
@@ -111,6 +117,12 @@ void autosort::pop(int _value)
 /// <returns></returns>
 element_k* autosort::find(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return nullptr;
+	}
+
 	element_k* current = head;
 	while (current != tail)
 	{
@@ -136,6 +148,12 @@ element_k* autosort::find(int _value)
 /// <param name="_value"></param>
 int autosort::count(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return 0;
+	}
+
 	int count = 0;
 
 	element_k* current = head;
@@ -162,6 +180,12 @@ int autosort::count(int _value)
 /// </summary>
 void autosort::prints()
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k* currentHead = head;
 
 	while (currentHead != tail)
@@ -179,6 +203,12 @@ void autosort::prints()
 /// <param name="current"></param>
 void autosort::printf(element_k* current = nullptr)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	if (current == nullptr)
 	{
 		current = head;

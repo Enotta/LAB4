@@ -73,6 +73,12 @@ void linear::add(int _key1, int _key2, int _value)
 /// <param name="_value"></param>
 void linear::pop(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k2_bi* temp;
 	element_k2_bi* current = head;
 
@@ -112,6 +118,11 @@ void linear::pop(int _value)
 /// <returns></returns>
 element_k2_bi* linear::find(int _value)
 {
+	if (head == nullptr)
+	{
+		return nullptr;
+	}
+
 	element_k2_bi* current = head;
 	while (current != tail)
 	{
@@ -137,6 +148,11 @@ element_k2_bi* linear::find(int _value)
 /// <param name="_value"></param>
 int linear::count(int _value)
 {
+	if (head == nullptr)
+	{
+		return 0;
+	}
+
 	int count = 0;
 
 	element_k2_bi* current = head;
@@ -163,6 +179,12 @@ int linear::count(int _value)
 /// </summary>
 void linear::prints()
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k2_bi* currentHead = head;
 
 	while (currentHead != tail)
@@ -180,6 +202,12 @@ void linear::prints()
 /// <param name="current"></param>
 void linear::printf()
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element_k2_bi* current = tail;
 	while (current->previous != nullptr)
 	{

@@ -48,6 +48,12 @@ void lifo::add(int _value)
 /// <param name="_value"></param>
 void lifo::pop(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element* first = head;
 	element* second = first->next;
 
@@ -89,6 +95,12 @@ void lifo::pop(int _value)
 /// <returns></returns>
 element* lifo::find(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return nullptr;
+	}
+
 	element* current = head;
 	while (current != tail)
 	{
@@ -110,6 +122,12 @@ element* lifo::find(int _value)
 /// <returns></returns>
 int lifo::count(int _value)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return 0;
+	}
+
 	int count = 0;
 
 	element* current = head;
@@ -131,6 +149,12 @@ int lifo::count(int _value)
 /// </summary>
 void lifo::prints()
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	element* currentHead = head;
 
 	while (currentHead != tail)
@@ -148,6 +172,12 @@ void lifo::prints()
 /// <param name="current"></param>
 void lifo::printf(element* current = nullptr)
 {
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
 	if (current == nullptr)
 	{
 		current = head;
