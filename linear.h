@@ -8,8 +8,8 @@ using namespace std;
 class linear
 {
 private:
-	element_k2_bi* head;
-	element_k2_bi* tail;
+	element_k2_bi* head; // §¤§à§Ý§à§Ó§Ñ - §á§Ö§â§Ó§í§Û §ï§Ý§Ö§Þ§Ö§ß§ä
+	element_k2_bi* tail; // §·§Ó§à§ã§ä -  §á§à§ã§Ý§Ö§Õ§ß§Ú§Û §ï§Ý§Ö§Þ§Ö§ß§ä
 
 public:
 	linear();

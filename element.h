@@ -59,6 +59,9 @@ struct element_k2_bi
 	element_k2_bi(int key1, int key2, int value);
 };
 
+/// <summary>
+/// §µ§Ù§Ö§Ý §Ò§Ú§ß§Ñ§â§ß§à§Ô§à §Õ§Ö§â§Ö§Ó§Ñ
+/// </summary>
 struct node
 {
 	int data;

@@ -4,10 +4,18 @@
 
 using namespace std;
 
-// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â autosort-§ã§á§Ú§ã§Ü§Ñ
+// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â linear-§ã§á§Ú§ã§Ü§Ñ
 linear::linear() : head(nullptr), tail(nullptr) {};
 linear::~linear()
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
+	// §±§â§à§ç§à§Õ §à§ä §á§Ö§â§Ó§à§Ô§à §Õ§à §á§à§ã§Ý§Ö§Õ§ß§Ö§Ô§à §Ú §å§Õ§Ñ§Ý§Ö§ß§Ú§Ö §é§Ö§â§Ö§Ù §Ó§â§Ö§Þ§Ö§ß§ß§å§ð §á§Ö§â§Ö§Þ§Ö§ß§ß§å§ð
 	element_k2_bi* current = head;
 	while (current != tail)
 	{
@@ -45,7 +53,7 @@ void linear::add(int _key1, int _key2, int _value)
 		return;
 	}
 
-	element_k2_bi* current = head;
+	element_k2_bi* current = head; // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	while (current->next
 		!= nullptr && (current->next->key1 < newElem->key1 || (current->next->key1 == newElem->key1 && current->next->key2 <= newElem->key2)))
 	{
@@ -73,12 +81,14 @@ void linear::add(int _key1, int _key2, int _value)
 /// <param name="_value"></param>
 void linear::pop(int _value)
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
 		return;
 	}
 
+	// §¥§Ó§Ö §á§Ö§â§Þ§Ö§ß§ß§í§Ö §Õ§Ý§ñ §å§Õ§à§Ò§ã§ä§Ó§Ñ §à§Ò§â§Ñ§ë§Ö§ß§Ú§ñ (§Ú§ç §Õ§Ó§Ö §ä§Ñ§Ü §Ü§Ñ§Ü §ã§á§Ú§ã§à§Ü §à§Õ§ß§à§ã§Ó§ñ§Ù§ß§í§Û)
 	element_k2_bi* temp;
 	element_k2_bi* current = head;
 
@@ -93,7 +103,7 @@ void linear::pop(int _value)
 		return;
 	}
 
-	while (current != tail)
+	while (current != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (current->value == _value)
 		{
@@ -118,13 +128,14 @@ void linear::pop(int _value)
 /// <returns></returns>
 element_k2_bi* linear::find(int _value)
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		return nullptr;
 	}
 
 	element_k2_bi* current = head;
-	while (current != tail)
+	while (current != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (current->value == _value)
 		{
@@ -134,7 +145,7 @@ element_k2_bi* linear::find(int _value)
 		current = current->next;
 	}
 
-	if (tail->value == _value)
+	if (tail->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ç§Ó§à§ã§ä§Ñ
 	{
 		return tail;
 	}
@@ -148,6 +159,7 @@ element_k2_bi* linear::find(int _value)
 /// <param name="_value"></param>
 int linear::count(int _value)
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		return 0;
@@ -156,7 +168,7 @@ int linear::count(int _value)
 	int count = 0;
 
 	element_k2_bi* current = head;
-	while (current != tail)
+	while (current != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (current->value == _value)
 		{
@@ -166,7 +178,7 @@ int linear::count(int _value)
 		current = current->next;
 	}
 
-	if (tail->value == _value)
+	if (tail->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ç§Ó§à§ã§ä§Ñ
 	{
 		count++;
 	}
@@ -179,6 +191,7 @@ int linear::count(int _value)
 /// </summary>
 void linear::prints()
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
@@ -187,7 +200,7 @@ void linear::prints()
 
 	element_k2_bi* currentHead = head;
 
-	while (currentHead != tail)
+	while (currentHead != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		cout << currentHead->value << " ";
 		currentHead = currentHead->next;
@@ -202,6 +215,7 @@ void linear::prints()
 /// <param name="current"></param>
 void linear::printf()
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
@@ -209,7 +223,7 @@ void linear::printf()
 	}
 
 	element_k2_bi* current = tail;
-	while (current->previous != nullptr)
+	while (current->previous != nullptr) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å §ã §Ù§Ñ§Õ§Ñ §ß§Ñ §á§Ö§â§Ö§Õ
 	{
 		cout << current->value << " ";
 		current = current->previous;
@@ -236,7 +250,6 @@ void linear::display()
 	cin >> key2;
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-
 	while (key1 != 0 && key2 != 0 && value != 0)
 	{
 		lst->add(key1, key2, value);
@@ -256,9 +269,15 @@ void linear::display()
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
 	lst->printf();
 
-	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§ä§à§â§í§Û §ç§à§ä§Ú§ä§Ö §å§Õ§Ñ§Ý§Ú§ä§î ";
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-	lst->pop(value);
+	while (value != 0)
+	{
+		lst->pop(value);
+
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cin >> value;
+	}
 
 	cout << "§±§â§ñ§Þ§à§Û §Ó§í§Ó§à§Õ: ";
 	lst->prints();
@@ -266,13 +285,25 @@ void linear::display()
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
 	lst->printf();
 
-	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§ä§à§â§í§Û §ç§à§ä§Ú§ä§Ö §ß§Ñ§Û§ä§Ú ";
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-	cout << lst->find(value) << endl;
+	while (value != 0)
+	{
+		cout << lst->find(value) << endl;
 
-	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§Ý§Ú§é§Ö§ã§ä§Ó§à §Ü§à§ä§à§â§í§ç §ç§à§ä§Ú§ä§Ö §á§à§ã§é§Ú§ä§Ñ§ä§î ";
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cin >> value;
+	}
+
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-	cout << lst->count(value) << endl;
+	while (value != 0)
+	{
+		cout << lst->count(value) << endl;
+
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cin >> value;
+	}
 
 	delete lst;
 }

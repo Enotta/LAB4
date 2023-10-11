@@ -5,18 +5,18 @@
 class tree
 {
 private:
-	node* root;
+	node* root; // 妞抉把快扶抆 - 扭快把志抑抄 改抖快技快扶找
 
 	void deleteH(node* nd);
 
-	node* insertHelper(node* nd, int _value);
-	node* removeHelper(node* nd, int _value);
+	node* insertH(node* nd, int _value);
+	node* removeH(node* nd, int _value);
 
 	node* findMin(node* nd);
-	node* findHelper(node* nd, int _value);
+	node* findH(node* nd, int _value);
 
-	void printaHelper(node* nd);
-	void printdHelper(node* nd);
+	void printaH(node* nd);
+	void printdH(node* nd);
 
 public:
 	tree();

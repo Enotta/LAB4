@@ -8,8 +8,8 @@ using namespace std;
 class autosort
 {
 private:
-	element_k* head;
-	element_k* tail;
+	element_k* head; // §¤§à§Ý§à§Ó§Ñ - §á§Ö§â§Ó§í§Û §ï§Ý§Ö§Þ§Ö§ß§ä
+	element_k* tail; // §·§Ó§à§ã§ä -  §á§à§ã§Ý§Ö§Õ§ß§Ú§Û §ï§Ý§Ö§Þ§Ö§ß§ä
 
 public:
 	autosort();

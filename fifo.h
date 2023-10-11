@@ -8,8 +8,8 @@ using namespace std;
 class fifo
 {
 private:
-	element* head;
-	element* tail;
+	element* head; // §¤§à§Ý§à§Ó§Ñ - §á§Ö§â§Ó§í§Û §ï§Ý§Ö§Þ§Ö§ß§ä
+	element* tail; // §·§Ó§à§ã§ä -  §á§à§ã§Ý§Ö§Õ§ß§Ú§Û §ï§Ý§Ö§Þ§Ö§ß§ä
 
 public:
 	fifo();

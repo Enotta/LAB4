@@ -8,6 +8,14 @@ using namespace std;
 fifo::fifo(): head(nullptr), tail(nullptr) {};
 fifo::~fifo()
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
+	if (head == nullptr)
+	{
+		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
+		return;
+	}
+
+	// §±§â§à§ç§à§Õ §à§ä §á§Ö§â§Ó§à§Ô§à §Õ§à §á§à§ã§Ý§Ö§Õ§ß§Ö§Ô§à §Ú §å§Õ§Ñ§Ý§Ö§ß§Ú§Ö §é§Ö§â§Ö§Ù §Ó§â§Ö§Þ§Ö§ß§ß§å§ð §á§Ö§â§Ö§Þ§Ö§ß§ß§å§ð
 	element* currentHead = head;
 	while (currentHead != tail)
 	{
@@ -30,11 +38,11 @@ void fifo::add(int _value)
 {
 	element* newElem = new element(_value);
 
-	if (head == nullptr)
+	if (head == nullptr) // §¦§ã§Ý§Ú §á§å§ã§ä
 	{
 		head = newElem;
 	}
-	else
+	else // §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §é§Ö§â§Ö§Ù §ç§Ó§à§ã§ä
 	{
 		tail->next = newElem;
 	}
@@ -48,16 +56,18 @@ void fifo::add(int _value)
 /// <param name="_value"></param>
 void fifo::pop(int _value)
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
 		return;
 	}
 
+	// §¥§Ó§Ö §á§Ö§â§Þ§Ö§ß§ß§í§Ö §Õ§Ý§ñ §å§Õ§à§Ò§ã§ä§Ó§Ñ §à§Ò§â§Ñ§ë§Ö§ß§Ú§ñ (§Ú§ç §Õ§Ó§Ö §ä§Ñ§Ü §Ü§Ñ§Ü §ã§á§Ú§ã§à§Ü §à§Õ§ß§à§ã§Ó§ñ§Ù§ß§í§Û)
 	element* first = head;
 	element* second = first->next;
 
-	if (first->value == _value)
+	if (first->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §Ô§à§Ý§à§Ó§å
 	{
 		head = second;
 		delete first;
@@ -65,7 +75,7 @@ void fifo::pop(int _value)
 		return;
 	}
 
-	while (second != tail)
+	while (second != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (second->value == _value)
 		{
@@ -79,7 +89,7 @@ void fifo::pop(int _value)
 		second = first->next;
 	}
 
-	if (second->value == _value)
+	if (second->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §ç§Ó§à§ã§ä
 	{
 		tail = first;
 		tail->next = nullptr;
@@ -95,6 +105,7 @@ void fifo::pop(int _value)
 /// <returns></returns>
 element* fifo::find(int _value)
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
@@ -102,7 +113,7 @@ element* fifo::find(int _value)
 	}
 
 	element* current = head;
-	while (current != tail)
+	while (current != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (current->value == _value)
 		{
@@ -110,6 +121,11 @@ element* fifo::find(int _value)
 		}
 
 		current = current->next;
+	}
+
+	if (current->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ç§Ó§à§ã§ä§Ñ
+	{
+		return current;
 	}
 
 	return nullptr;
@@ -122,6 +138,7 @@ element* fifo::find(int _value)
 /// <returns></returns>
 int fifo::count(int _value)
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
@@ -131,7 +148,7 @@ int fifo::count(int _value)
 	int count = 0;
 
 	element* current = head;
-	while (current != tail)
+	while (current != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (current->value == _value)
 		{
@@ -139,6 +156,11 @@ int fifo::count(int _value)
 		}
 
 		current = current->next;
+	}
+
+	if (current->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ç§Ó§à§ã§ä§Ñ
+	{
+		count++;
 	}
 
 	return count;
@@ -149,6 +171,7 @@ int fifo::count(int _value)
 /// </summary>
 void fifo::prints()
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
@@ -157,7 +180,7 @@ void fifo::prints()
 
 	element* currentHead = head;
 
-	while (currentHead != tail)
+	while (currentHead != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		cout << currentHead->value << " ";
 		currentHead = currentHead->next;
@@ -172,6 +195,7 @@ void fifo::prints()
 /// <param name="current"></param>
 void fifo::printf(element* current = nullptr)
 {
+	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
 	{
 		cout << "§³§á§Ú§ã§à§Ü §á§å§ã§ä!" << endl;
@@ -183,7 +207,7 @@ void fifo::printf(element* current = nullptr)
 		current = head;
 	}
 
-	if (current != tail)
+	if (current != tail) // §µ§ç§à§Õ §Ó §Ü§à§ß§Ö§è
 	{
 		printf(current->next);
 	}
@@ -223,9 +247,15 @@ void fifo::display()
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
 	lst->printf(0);
 
-	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§ä§à§â§í§Û §ç§à§ä§Ú§ä§Ö §å§Õ§Ñ§Ý§Ú§ä§î ";
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-	lst->pop(value);
+	while (value != 0)
+	{
+		lst->pop(value);
+
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cin >> value;
+	}
 
 	cout << "§±§â§ñ§Þ§à§Û §Ó§í§Ó§à§Õ: ";
 	lst->prints();
@@ -233,13 +263,25 @@ void fifo::display()
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
 	lst->printf(0);
 
-	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§ä§à§â§í§Û §ç§à§ä§Ú§ä§Ö §ß§Ñ§Û§ä§Ú ";
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-	cout << lst->find(value) << endl;
+	while (value != 0)
+	{
+		cout << lst->find(value) << endl;
 
-	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ, §Ü§à§Ý§Ú§é§Ö§ã§ä§Ó§à §Ü§à§ä§à§â§í§ç §ç§à§ä§Ú§ä§Ö §á§à§ã§é§Ú§ä§Ñ§ä§î ";
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cin >> value;
+	}
+
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
-	cout << lst->count(value) << endl;
+	while (value != 0)
+	{
+		cout << lst->count(value) << endl;
 
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cin >> value;
+	}
+	
 	delete lst;
 }
