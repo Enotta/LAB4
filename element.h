@@ -59,3 +59,11 @@ struct element_k2_bi
 	element_k2_bi(int key1, int key2, int value);
 };
 
+struct node
+{
+	int data;
+
+	node* left;
+	node* right;
+};
+

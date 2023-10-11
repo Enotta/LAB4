@@ -5,6 +5,7 @@
 #include "autosort.h"
 #include "bi_autosort.h"
 #include "linear.h"
+#include "tree.h"
 
 using namespace std;
 
@@ -14,5 +15,6 @@ int main()
 	//lifo::display();
 	//autosort::display();
 	//bi_autosort::display();
-	linear::display();
+	//linear::display();
+	tree::display();
 }

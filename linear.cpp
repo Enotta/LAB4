@@ -52,7 +52,7 @@ void linear::add(int _key1, int _key2, int _value)
 		current = current->next;
 	}
 
-	if (current->key1 > newElem->key1 || (current->key1 > newElem->key1 && current->key2 >= newElem->key2))
+	if (current->key1 > newElem->key1 || (current->key1 == newElem->key1 && current->key2 >= newElem->key2))
 	{
 		newElem->next = current;
 		current->previous = newElem;
