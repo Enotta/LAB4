@@ -221,5 +221,7 @@ void tree::display()
     bst->printd();
     cout << endl;
 
+    system("pause");
+
     delete bst;
 }

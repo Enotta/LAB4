@@ -97,6 +97,12 @@ void linear::pop(int _value)
 		temp = current;
 		head = current->next;
 
+		if (head == nullptr)
+		{
+			head = nullptr;
+			return;
+		}
+
 		head->previous = nullptr;
 		delete temp;
 
@@ -118,6 +124,16 @@ void linear::pop(int _value)
 		}
 
 		current = current->next;
+	}
+
+	if (current->value == _value)
+	{
+		temp = current;
+
+		current->previous->next = nullptr;
+		tail = current->previous;
+
+		delete temp;
 	}
 }
 
