@@ -127,11 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="autosort.cpp" />
+    <ClCompile Include="bi_autosort.cpp" />
+    <ClCompile Include="element.cpp" />
     <ClCompile Include="fifo.cpp" />
-    <ClCompile Include="LAB41.cpp" />
+    <ClCompile Include="LAB4.cpp" />
+    <ClCompile Include="lifo.cpp" />
+    <ClCompile Include="linear.cpp" />
+    <ClCompile Include="tree.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="autosort.h" />
+    <ClInclude Include="bi_autosort.h" />
+    <ClInclude Include="element.h" />
     <ClInclude Include="fifo.h" />
+    <ClInclude Include="lifo.h" />
+    <ClInclude Include="linear.h" />
+    <ClInclude Include="tree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

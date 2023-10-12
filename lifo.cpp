@@ -1,12 +1,12 @@
-#include "fifo.h"
+#include "lifo.h"
 #include "element.h"
 #include <iostream>
 
 using namespace std;
 
-// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â fifo-§ã§á§Ú§ã§Ü§Ñ
-fifo::fifo(): head(nullptr), tail(nullptr) {};
-fifo::~fifo()
+// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â lifo-§ã§á§Ú§ã§Ü§Ñ
+lifo::lifo() : head(nullptr), tail(nullptr) {};
+lifo::~lifo()
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -16,11 +16,11 @@ fifo::~fifo()
 	}
 
 	// §±§â§à§ç§à§Õ §à§ä §á§Ö§â§Ó§à§Ô§à §Õ§à §á§à§ã§Ý§Ö§Õ§ß§Ö§Ô§à §Ú §å§Õ§Ñ§Ý§Ö§ß§Ú§Ö §é§Ö§â§Ö§Ù §Ó§â§Ö§Þ§Ö§ß§ß§å§ð §á§Ö§â§Ö§Þ§Ö§ß§ß§å§ð
-	element* currentHead = head;
-	while (currentHead != tail)
+	element* current = head;
+	while (current != tail)
 	{
-		element* temp = currentHead;
-		currentHead = currentHead->next;
+		element* temp = current;
+		current = current->next;
 
 		delete temp;
 	}
@@ -34,27 +34,27 @@ fifo::~fifo()
 /// §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ó §ã§á§Ú§ã§à§Ü
 /// </summary>
 /// <param name="_value"></param>
-void fifo::add(int _value)
+void lifo::add(int _value)
 {
 	element* newElem = new element(_value);
 
 	if (head == nullptr) // §¦§ã§Ý§Ú §á§å§ã§ä
 	{
 		head = newElem;
+		tail = newElem;
 	}
-	else // §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §é§Ö§â§Ö§Ù §ç§Ó§à§ã§ä
+	else // §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §Ó §Ü§à§ß§Ö§è §ç§Ó§à§ã§ä§Ñ
 	{
-		tail->next = newElem;
+		newElem->next = head;
+		head = newElem;
 	}
-
-	tail = newElem;
 }
 
 /// <summary>
 /// §µ§Õ§Ñ§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ú§Ù §ã§á§Ú§ã§Ü§Ñ §á§à §Ù§ß§Ñ§é§Ö§ß§Ú§ð
 /// </summary>
 /// <param name="_value"></param>
-void fifo::pop(int _value)
+void lifo::pop(int _value)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -67,7 +67,7 @@ void fifo::pop(int _value)
 	element* first = head;
 	element* second = first->next;
 
-	if (first->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §Ô§à§Ý§à§Ó§å
+	if (first->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§Ö §Ô§à§Ý§à§Ó§í
 	{
 		head = second;
 		delete first;
@@ -89,7 +89,7 @@ void fifo::pop(int _value)
 		second = first->next;
 	}
 
-	if (second->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §ç§Ó§à§ã§ä
+	if (second->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ç§Ó§à§ã§ä§Ñ
 	{
 		tail = first;
 		tail->next = nullptr;
@@ -103,7 +103,7 @@ void fifo::pop(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-element* fifo::find(int _value)
+element* lifo::find(int _value)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -136,7 +136,7 @@ element* fifo::find(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-int fifo::count(int _value)
+int lifo::count(int _value)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -169,7 +169,7 @@ int fifo::count(int _value)
 /// <summary>
 /// §£§í§Ó§à§Õ §ã§á§Ú§ã§Ü§Ñ §ã §ß§Ñ§é§Ñ§Ý§Ñ §Ú §Õ§à §Ü§à§ß§è§Ñ
 /// </summary>
-void fifo::prints()
+void lifo::prints()
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -193,7 +193,7 @@ void fifo::prints()
 /// §£§í§Ó§à§Õ §ã §Ü§à§ß§è§Ñ §Ú §Õ§à §ß§Ñ§é§Ñ§Ý§Ñ (§â§Ö§Ü§å§â§ã§Ú§Ó§ß§à)
 /// </summary>
 /// <param name="current"></param>
-void fifo::printf(element* current = nullptr)
+void lifo::printf(element* current = nullptr)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -207,7 +207,7 @@ void fifo::printf(element* current = nullptr)
 		current = head;
 	}
 
-	if (current != tail) // §µ§ç§à§Õ §Ó §Ü§à§ß§Ö§è
+	if (current != tail) // §²§Ö§Ü§å§â§ã§Ú§Ó§ß§í§Û §Ù§Ñ§ç§à§Õ §Ó §Ü§à§ß§Ö§è
 	{
 		printf(current->next);
 	}
@@ -225,10 +225,10 @@ void fifo::printf(element* current = nullptr)
 /// <summary>
 /// §¥§Ö§Þ§à§ß§ã§ä§â§Ñ§è§Ú§ñ §â§Ñ§Ò§à§ä§í
 /// </summary>
-void fifo::display()
+void lifo::display()
 {
 	int value;
-	fifo* lst = new fifo();
+	lifo* lst = new lifo();
 
 	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
@@ -282,6 +282,6 @@ void fifo::display()
 		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 		cin >> value;
 	}
-	
+
 	delete lst;
 }

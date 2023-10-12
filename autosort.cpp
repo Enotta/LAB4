@@ -1,12 +1,12 @@
-#include "fifo.h"
+#include "autosort.h"
 #include "element.h"
 #include <iostream>
 
 using namespace std;
 
-// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â fifo-§ã§á§Ú§ã§Ü§Ñ
-fifo::fifo(): head(nullptr), tail(nullptr) {};
-fifo::~fifo()
+// §¬§à§ß§ã§ä§â§å§Ü§ä§à§â §Ú §Õ§Ö§ã§ä§â§å§Ü§ä§à§â autosort-§ã§á§Ú§ã§Ü§Ñ
+autosort::autosort() : head(nullptr), tail(nullptr) {};
+autosort::~autosort()
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -16,11 +16,11 @@ fifo::~fifo()
 	}
 
 	// §±§â§à§ç§à§Õ §à§ä §á§Ö§â§Ó§à§Ô§à §Õ§à §á§à§ã§Ý§Ö§Õ§ß§Ö§Ô§à §Ú §å§Õ§Ñ§Ý§Ö§ß§Ú§Ö §é§Ö§â§Ö§Ù §Ó§â§Ö§Þ§Ö§ß§ß§å§ð §á§Ö§â§Ö§Þ§Ö§ß§ß§å§ð
-	element* currentHead = head;
-	while (currentHead != tail)
+	element_k* current = head;
+	while (current != tail)
 	{
-		element* temp = currentHead;
-		currentHead = currentHead->next;
+		element_k* temp = current;
+		current = current->next;
 
 		delete temp;
 	}
@@ -34,27 +34,49 @@ fifo::~fifo()
 /// §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ó §ã§á§Ú§ã§à§Ü
 /// </summary>
 /// <param name="_value"></param>
-void fifo::add(int _value)
+void autosort::add(int _key, int _value)
 {
-	element* newElem = new element(_value);
+	element_k* newElem = new element_k(_key, _value);
 
-	if (head == nullptr) // §¦§ã§Ý§Ú §á§å§ã§ä
+	if (head == nullptr)
 	{
 		head = newElem;
+		tail = newElem;
+		return;
 	}
-	else // §¥§à§Ò§Ñ§Ó§Ý§Ö§ß§Ú§Ö §é§Ö§â§Ö§Ù §ç§Ó§à§ã§ä
+	else if (tail->key < newElem->key)
 	{
 		tail->next = newElem;
+		tail = newElem;
+		return;
 	}
 
-	tail = newElem;
+	element_k* current = head;
+	while (current->next != nullptr && current->next->key < _key)
+	{
+		current = current->next;
+	}
+
+	if (current->key >= newElem->key)
+	{
+		newElem->next = current;
+		if (current == head)
+		{
+			head = newElem;
+		}
+	}
+	else
+	{
+		newElem->next = current->next;
+		current->next = newElem;
+	}
 }
 
 /// <summary>
 /// §µ§Õ§Ñ§Ý§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §Ú§Ù §ã§á§Ú§ã§Ü§Ñ §á§à §Ù§ß§Ñ§é§Ö§ß§Ú§ð
 /// </summary>
 /// <param name="_value"></param>
-void fifo::pop(int _value)
+void autosort::pop(int _value)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -64,10 +86,10 @@ void fifo::pop(int _value)
 	}
 
 	// §¥§Ó§Ö §á§Ö§â§Þ§Ö§ß§ß§í§Ö §Õ§Ý§ñ §å§Õ§à§Ò§ã§ä§Ó§Ñ §à§Ò§â§Ñ§ë§Ö§ß§Ú§ñ (§Ú§ç §Õ§Ó§Ö §ä§Ñ§Ü §Ü§Ñ§Ü §ã§á§Ú§ã§à§Ü §à§Õ§ß§à§ã§Ó§ñ§Ù§ß§í§Û)
-	element* first = head;
-	element* second = first->next;
+	element_k* first = head;
+	element_k* second = first->next;
 
-	if (first->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §Ô§à§Ý§à§Ó§å
+	if (first->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§Ö §Ô§à§Ý§à§Ó§í
 	{
 		head = second;
 		delete first;
@@ -89,7 +111,7 @@ void fifo::pop(int _value)
 		second = first->next;
 	}
 
-	if (second->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §ç§Ó§à§ã§ä
+	if (second->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§Ö §ç§Ó§à§ã§ä§Ñ
 	{
 		tail = first;
 		tail->next = nullptr;
@@ -103,7 +125,7 @@ void fifo::pop(int _value)
 /// </summary>
 /// <param name="_value"></param>
 /// <returns></returns>
-element* fifo::find(int _value)
+element_k* autosort::find(int _value)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -112,7 +134,7 @@ element* fifo::find(int _value)
 		return nullptr;
 	}
 
-	element* current = head;
+	element_k* current = head;
 	while (current != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (current->value == _value)
@@ -123,9 +145,9 @@ element* fifo::find(int _value)
 		current = current->next;
 	}
 
-	if (current->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ç§Ó§à§ã§ä§Ñ
+	if (tail->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §å§é§Ö§ä §ç§Ó§à§ã§ä§Ñ
 	{
-		return current;
+		return tail;
 	}
 
 	return nullptr;
@@ -135,8 +157,7 @@ element* fifo::find(int _value)
 /// §±§à§Õ§ã§é§×§ä §Ü§à§Ý§Ú§é§Ö§ã§ä§Ó§Ñ §ï§Ý§Ö§Þ§Ö§ß§ä§à§Ó §Ù§Ñ§Õ§Ñ§ß§ß§à§Ô§à §Ù§ß§Ñ§é§Ö§ß§Ú§ñ
 /// </summary>
 /// <param name="_value"></param>
-/// <returns></returns>
-int fifo::count(int _value)
+int autosort::count(int _value)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -147,7 +168,7 @@ int fifo::count(int _value)
 
 	int count = 0;
 
-	element* current = head;
+	element_k* current = head;
 	while (current != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
 		if (current->value == _value)
@@ -158,7 +179,7 @@ int fifo::count(int _value)
 		current = current->next;
 	}
 
-	if (current->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ç§Ó§à§ã§ä§Ñ
+	if (tail->value == _value) // §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §å§é§Ö§ä §ç§Ó§à§ã§ä§Ñ
 	{
 		count++;
 	}
@@ -169,7 +190,7 @@ int fifo::count(int _value)
 /// <summary>
 /// §£§í§Ó§à§Õ §ã§á§Ú§ã§Ü§Ñ §ã §ß§Ñ§é§Ñ§Ý§Ñ §Ú §Õ§à §Ü§à§ß§è§Ñ
 /// </summary>
-void fifo::prints()
+void autosort::prints()
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -178,7 +199,7 @@ void fifo::prints()
 		return;
 	}
 
-	element* currentHead = head;
+	element_k* currentHead = head;
 
 	while (currentHead != tail) // §±§â§à§Ò§Ö§Ô §á§à §ã§á§Ú§ã§Ü§å
 	{
@@ -193,7 +214,7 @@ void fifo::prints()
 /// §£§í§Ó§à§Õ §ã §Ü§à§ß§è§Ñ §Ú §Õ§à §ß§Ñ§é§Ñ§Ý§Ñ (§â§Ö§Ü§å§â§ã§Ú§Ó§ß§à)
 /// </summary>
 /// <param name="current"></param>
-void fifo::printf(element* current = nullptr)
+void autosort::printf(element_k* current = nullptr)
 {
 	// §±§â§à§Ó§Ö§â§Ü§Ñ §ß§Ñ §á§å§ã§ä§à§ä§å
 	if (head == nullptr)
@@ -207,7 +228,7 @@ void fifo::printf(element* current = nullptr)
 		current = head;
 	}
 
-	if (current != tail) // §µ§ç§à§Õ §Ó §Ü§à§ß§Ö§è
+	if (current != tail) // §µ§ç§à§Õ §Ó §Ü§à§ß§Ö§è §â§Ö§Ü§å§â§ã§Ú§Ó§ß§à
 	{
 		printf(current->next);
 	}
@@ -225,18 +246,23 @@ void fifo::printf(element* current = nullptr)
 /// <summary>
 /// §¥§Ö§Þ§à§ß§ã§ä§â§Ñ§è§Ú§ñ §â§Ñ§Ò§à§ä§í
 /// </summary>
-void fifo::display()
+void autosort::display()
 {
+	int key;
 	int value;
-	fifo* lst = new fifo();
+	autosort* lst = new autosort();
 
-	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §Ü§Ý§ð§é §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+	cin >> key;
+	cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
 	while (value != 0)
 	{
-		lst->add(value);
+		lst->add(key, value);
 
-		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §Ü§Ý§ð§é §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cin >> key;
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 		cin >> value;
 	}
 
@@ -247,13 +273,13 @@ void fifo::display()
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
 	lst->printf(0);
 
-	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
 	while (value != 0)
 	{
 		lst->pop(value);
 
-		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §å§Õ§Ñ§Ý§Ö§ß§Ú§ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 		cin >> value;
 	}
 
@@ -263,25 +289,25 @@ void fifo::display()
 	cout << "§°§Ò§â§Ñ§ä§ß§í§Û §Ó§í§Ó§à§Õ: ";
 	lst->printf(0);
 
-	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
 	while (value != 0)
 	{
 		cout << lst->find(value) << endl;
 
-		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Ú§ã§Ü§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 		cin >> value;
 	}
 
-	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+	cout << endl << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 	cin >> value;
 	while (value != 0)
 	{
 		cout << lst->count(value) << endl;
 
-		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Û §ï§Ý§Ö§Þ§Ö§ß§ä §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
+		cout << "§£§Ó§Ö§Õ§Ú§ä§Ö §à§é§Ö§â§Ö§Õ§ß§à§Ö §Ù§ß§Ñ§é§Ö§ß§Ú§Ö §ï§Ý§Ö§Þ§Ö§ß§ä§Ñ §ã§á§Ú§ã§Ü§Ñ §Õ§Ý§ñ §á§à§Õ§ã§é§×§ä§Ñ (0 - §á§â§Ö§Ü§â§Ñ§ë§Ö§ß§Ú§Ö §Ó§Ó§à§Õ§Ñ) ";
 		cin >> value;
 	}
-	
+
 	delete lst;
 }
